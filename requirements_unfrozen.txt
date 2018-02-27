@@ -1,0 +1,8 @@
+# Unfrozen requirements. No version pins should be included here
+# unless absolutely necessary. If a pin is required, try to use a range
+# pin rather than an absolute one (e.g. ``<3.2`` rather than ``==3.1.5``).
+
+flask
+flask-restful
+pathlib;python_version<"3.0"
+sqlalchemy
