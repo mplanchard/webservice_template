@@ -3,6 +3,8 @@
 # Alpine is smaller and more security focused than the ubuntu base
 FROM python:3.6-alpine
 
+ENV FLASK_APP my_library.main
+
 ARG DEPLOY_ENVIRONMENT=dev
 
 COPY . /build
@@ -18,3 +20,7 @@ RUN if [[ "$DEPLOY_ENVIRONMENT" == "dev" ]]; then \
         pip install dist/* && \
         rm -rf ./* \
     fi
+
+WORKDIR /
+
+RUN ["flask", "run"]

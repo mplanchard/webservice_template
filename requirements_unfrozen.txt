@@ -2,7 +2,11 @@
 # unless absolutely necessary. If a pin is required, try to use a range
 # pin rather than an absolute one (e.g. ``<3.2`` rather than ``==3.1.5``).
 
+enum;python_version<"3.0"
 flask
-flask-restful
+flask-migrate
+flask-restplus
+flask-sqlalchemy
+marshmallow-sqlalchemy
 pathlib;python_version<"3.0"
 sqlalchemy
