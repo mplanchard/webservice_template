@@ -1,22 +1,19 @@
 """Test mixins."""
 
-from os import environ
-
 import pytest
 
-from .util import run
+from my_library.app import create_app
 
 
-class SessionFreshDB(object):
-    """Ensure a fresh database for each test session.
+class AppTest(object):
+    """Create an application object and push the app context.
 
-    Also exercises the full migration path (both up and down).
+    Allows use of ``flask.current_app`` to get the app instance.
     """
 
-    @pytest.fixture(scope='session', autouse=True)
-    def run_migrations(self):
-        """Run database migrations. On cleanup, downgrade to base."""
-        environ['FLASK_APP'] = 'my_library.main'
-        run('flask db upgrade')
-        yield
-        run('flask db downgrade base')
+    @pytest.fixture(scope='class', autouse=True)
+    def setup_app(self):
+        """Set up the app and push its context."""
+        app = create_app()
+        with app.app_context():
+            yield

@@ -1,5 +1,7 @@
-# Editors
+# Local Stuff
+local/
 
+# Editors
 .vscode/
 
 # Byte-compiled / optimized / DLL files

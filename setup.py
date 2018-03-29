@@ -53,7 +53,7 @@ CLASSIFIERS = [
 
 PACKAGE_DIR = realpath(dirname(__file__))
 
-with open(join(PACKAGE_DIR, 'requirements.txt')) as reqfile:
+with open(join(PACKAGE_DIR, 'requirements_unfrozen.txt')) as reqfile:
     for ln in (l.strip() for l in reqfile):
         if ln and not ln.startswith('#'):
             PACKAGE_DEPENDENCIES.append(ln)

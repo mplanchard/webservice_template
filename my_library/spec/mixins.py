@@ -1,6 +1,8 @@
 """Schema mixins for representation specification."""
 
-from marshmallow import pre_load, post_dump
+from __future__ import absolute_import, unicode_literals
+
+from marshmallow import fields, post_dump, pre_load
 
 
 class Collection(object):
@@ -34,5 +36,12 @@ class Collection(object):
 
     @pre_load(pass_many=True)
     def unwrap_envelope(self, data, many):
+        """Retrieve data from the envelope key."""
         if many:
             return data[self.envelope_key]
+
+
+class Resource(object):
+    """Automatically populate resource location on dump() if available."""
+
+    href = fields.String()

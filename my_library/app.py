@@ -3,6 +3,8 @@
 To run Flask directly, ``export FLASK_APP=my_library.main:app``
 """
 
+from __future__ import absolute_import, unicode_literals
+
 from inspect import isclass
 
 from flask import Flask
@@ -24,6 +26,7 @@ class FlaskDBWrapper(object):
         self.metadata = db.metadata
         self.session = db.session
         self.models = models
+        self.flask_sqla = db
 
 
 def get_db_conf(load=True):
@@ -37,9 +40,9 @@ def get_db_conf(load=True):
         ConfVar('user', None, type_=str),
         ConfVar('password', None, type_=str),
         ConfVar('name', None, type_=str),
-        ConfVar('host', None, type_=str),
+        ConfVar('host', 'local/local.sqlite', type_=str),
         ConfVar('port', None, type_=str),
-        ConfVar('engine', 'memory'),
+        ConfVar('engine', 'sqlite'),
         prefix='DB'
     )
     if load:
@@ -122,6 +125,8 @@ def db_uri(db_conf):
     """Return the database URI, given the database config."""
     if db_conf.get('engine') == 'memory':
         return 'sqlite:///:memory:'
+    elif db_conf.get('engine') == 'sqlite':
+        return '{engine}:///{host}'.format(**dict(db_conf))
     return '{engine}://{user}:{password}@{host}:{port}/{name}'.format(
         **dict(db_conf)
     )

@@ -11,16 +11,17 @@ COPY . /build
 
 WORKDIR /build
 
-RUN pip install setuptools wheel
-
-RUN if [[ "$DEPLOY_ENVIRONMENT" == "dev" ]]; then \
+RUN apk add --no-cache build-base postgresql-dev && \
+    pip install setuptools wheel && \
+    if [[ "$DEPLOY_ENVIRONMENT" == "dev" ]]; then \
         pip install -e . ; \
     else \
         python setup.py bdist_wheel && \
         pip install dist/* && \
-        rm -rf ./* \
-    fi
+        rm -rf ./* ; \
+    fi && \
+    apk del build-base
 
 WORKDIR /
 
-RUN ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0"]

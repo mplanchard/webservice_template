@@ -1,5 +1,7 @@
 """Mixins for inclusion in other classes."""
 
+from __future__ import absolute_import, unicode_literals
+
 from datetime import datetime
 
 from sqlalchemy import Boolean, Column, DateTime

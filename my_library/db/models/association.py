@@ -1,5 +1,7 @@
 """Association tables."""
 
+from __future__ import absolute_import, unicode_literals
+
 from sqlalchemy import Column, Integer, ForeignKey, Table
 
 from .base import Base
